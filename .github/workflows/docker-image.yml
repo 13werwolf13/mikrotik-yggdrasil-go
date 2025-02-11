@@ -28,6 +28,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm,linux/arm64,linux/arm/v5,linux/arm/v7,linux/arm/v8,linux/arm64/v7,linux/arm64/v8
           push: true
           tags: werwolf2517/mikrotik-yggdrasil-go:latest
