@@ -1,23 +1,17 @@
-FROM docker.io/golang:alpine as builder
+FROM docker.io/golang:1.24rc3-alpine3.21 as builder
 
 ARG DUMB_INIT_VERSION=1.2.5 \
     DUMB_INIT_ARCH=aarch64 \
-    YGGDRASIL_VERSION=0.4.7
+    YGGDRASIL_VERSION=0.5.12
 
-RUN set -ex \
-  && apk --no-cache add \
-      build-base \
-      curl \
-      git \
-  && git clone "https://github.com/yggdrasil-network/yggdrasil-go.git" /src \
+RUN apk --no-cache add build-base curl git \
+  && git clone --branch="v${YGGDRASIL_VERSION}" "https://github.com/yggdrasil-network/yggdrasil-go.git" /src \
   && cd /src \
-  && git reset --hard v${YGGDRASIL_VERSION} \
   && ./build
 
-FROM docker.io/alpine
+FROM docker.io/alpine:latest
 
-RUN set -ex \
-  && apk --no-cache add bash sed
+RUN apk --no-cache add bash sed
 
 COPY --from=builder /src/yggdrasil /usr/bin/
 COPY --from=builder /src/yggdrasilctl /usr/bin/
