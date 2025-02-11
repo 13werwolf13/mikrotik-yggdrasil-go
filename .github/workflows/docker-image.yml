@@ -30,4 +30,4 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64,linux/arm/v7
           push: true
-          tags: werwolf2517/mikrotik-yggdrasil-go:$(grep YGGDRASIL_VERSION ./Dockerfile | head -n 1 | cut -d'=' -f2-)
+          tags: werwolf2517/mikrotik-yggdrasil-go:latest
